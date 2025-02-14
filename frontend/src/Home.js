@@ -8,7 +8,7 @@ const Home = () => {
 
     const fetchProducts = async () => {
         try {
-            const response = await axios.get("http://localhost:4000/api/get");
+            const response = await axios.get("https://productmanage-rmh2.onrender.com/api/get");
             setProducts(response.data);
         } catch (error) {
             console.error("Error fetching products:", error);
@@ -21,7 +21,7 @@ const Home = () => {
 
     const handleDelete = async (id) => {
         try {
-            await axios.delete(`http://localhost:4000/api/delete/${id}`);
+            await axios.delete(`https://productmanage-rmh2.onrender.com/api/delete/${id}`);
             alert("Data deleted successfully");
             fetchProducts(); 
         } catch (error) {
