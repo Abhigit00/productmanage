@@ -1,37 +1,44 @@
-import React, { useState } from "react";
-import './Details.css'
+ import React, { useState } from "react";
+import './Details.css';
 import axios from 'axios';
 
 const Details = () => {
-  const [form,setForm] = useState({id:"",title:"",subtitle:"",price:""})
+  const [form, setForm] = useState({ id: "", title: "", subtitle: "", price: "" });
 
-  const handlesubmit = async(e)=>{
+  const handleChange = (e) => {
+    setForm((prevForm) => ({
+      ...prevForm,
+      [e.target.name]: e.target.value,
+    }));
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post('https://productmanage-rmh2.onrender.com/api/post',form)
-      alert("details added")
-
+      await axios.post('https://productmanage-rmh2.onrender.com/api/post', form);
+      alert("Details added successfully!");
+      setForm({ id: "", title: "", subtitle: "", price: "" }); // Reset form after submission
     } catch (error) {
-      console.log(error)
-      alert('error in adding details')
+      console.error("Error adding details:", error.response?.data || error.message);
+      alert('Error in adding details: ' + (error.response?.data?.message || error.message));
     }
-  }
+  };
+
   return (
-    <div>
-      <h1>Product-Details</h1>
-      <form action="" onSubmit={handlesubmit}
->
-        <input type="text" placeholder="ID"   value={form.id}
-          onChange={(e) => setForm({ ...form, id: e.target.value })} />
+    <div className="details-container">
+      <h1>Product Details</h1>
+      <form onSubmit={handleSubmit} className="details-form">
+        <label>ID:</label>
+        <input type="text" name="id" placeholder="ID" value={form.id} onChange={handleChange} />
 
-        <input type="text" placeholder="TITLE"   value={form.title}
-          onChange={(e) => setForm({ ...form, title: e.target.value })}/>
+        <label>Title:</label>
+        <input type="text" name="title" placeholder="Title" value={form.title} onChange={handleChange} />
 
-        <input type="text" placeholder="SUBTITLE"   value={form.subtitle}
-          onChange={(e) => setForm({ ...form, subtitle: e.target.value })}/>
+        <label>Subtitle:</label>
+        <input type="text" name="subtitle" placeholder="Subtitle" value={form.subtitle} onChange={handleChange} />
 
-        <input type="text" placeholder="PRICE"   value={form.price}
-          onChange={(e) => setForm({ ...form, price: e.target.value })}/>
+        <label>Price:</label>
+        <input type="text" name="price" placeholder="Price" value={form.price} onChange={handleChange} />
 
         <button className="create" type="submit">Create</button>
       </form>
