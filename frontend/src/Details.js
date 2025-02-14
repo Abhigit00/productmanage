@@ -8,7 +8,7 @@ const Details = () => {
   const handlesubmit = async(e)=>{
     e.preventDefault();
     try {
-      const res = await axios.post('http://localhost:4000/api/post',form)
+      const res = await axios.post('https://productmanage-rmh2.onrender.com/api/post',form)
       alert("details added")
 
     } catch (error) {
